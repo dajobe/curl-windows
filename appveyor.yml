@@ -1,0 +1,45 @@
+# http://www.appveyor.com/docs/build-configuration
+
+# version format
+version: 1.0.{build}
+
+# branches to build
+branches:
+  - master
+
+# Get image with cygwin
+os: Unstable
+
+# scripts that are called at very beginning, before repo cloning
+init:
+  - echo Building cURL for Windows
+  
+# GIT clone directory
+clone_folder: c:\projects\curl
+
+platform: x64
+
+configuration: Release
+
+environment:
+  CYG_ROOT: C:/cygwin
+  CYG_MIRROR: http://cygwin.mirror.constant.com
+  CYG_CACHE: C:/cygwin/var/cache/setup
+  DEST: "c:/projects/dest"
+  CURL_VERSION: 7.39.0
+  CURL_DL_URL: "http://curl.haxx.se/download/"
+
+install:
+  - cmd: 'echo Installing Curl from Chocolatey'
+  - cmd: 'cinst curl'
+ 
+ before_build:
+   - cmd: 'cd \projects\curl'
+   - cmd: 'curl -L -o curl.zip %CURL_DL_URL%curl-%CURL_VERSION%.zip'
+   - cmd: '7z x curl.zip'
+   - cmd: 'rename curl-%CURL_VERSION% curl-src'
+   - cmd: 'del curl.zip'
+   
+build:
+   - cmd: 'cd c:\projects\curl\curl-src\winbuild'
+   - cmd: 'nmake /f Makefile.vc mode=dll VC=12'
