@@ -30,7 +30,7 @@ before_build:
   - cmd: '7z x curl.zip > NUL'
   - cmd: 'rename curl-%CURL_VERSION% curl-src'
   - cmd: 'del curl.zip'
-  - cmd: 'dir /s /b curl-src'
 
+# project: C:\projects\curl\curl-src\projects\Windows\VC12\curl.sln
 build:
-  project: C:\projects\curl\curl-src\Windows\VC12\curl.sln
+  project: curl-src\projects\Windows\VC12\curl.sln
