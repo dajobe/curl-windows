@@ -33,13 +33,13 @@ install:
   - cmd: 'echo Installing Curl from Chocolatey'
   - cmd: 'cinst curl'
  
- before_build:
-   - cmd: 'cd \projects\curl'
-   - cmd: 'curl -L -o curl.zip %CURL_DL_URL%curl-%CURL_VERSION%.zip'
-   - cmd: '7z x curl.zip'
-   - cmd: 'rename curl-%CURL_VERSION% curl-src'
-   - cmd: 'del curl.zip'
-   
-build:
-   - cmd: 'cd c:\projects\curl\curl-src\winbuild'
-   - cmd: 'nmake /f Makefile.vc mode=dll VC=12'
+before_build:
+  - cmd: 'cd \projects\curl'
+  - cmd: 'curl -L -o curl.zip %CURL_DL_URL%curl-%CURL_VERSION%.zip'
+  - cmd: '7z x curl.zip'
+  - cmd: 'rename curl-%CURL_VERSION% curl-src'
+  - cmd: 'del curl.zip'
+
+build_script:
+  - cmd: 'cd c:\projects\curl\curl-src\winbuild'
+  - cmd: 'nmake /f Makefile.vc mode=dll VC=12'
