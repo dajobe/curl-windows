@@ -8,13 +8,6 @@ branches:
   only:
     - master
 
-# Get image with cygwin
-os: Unstable
-
-# scripts that are called at very beginning, before repo cloning
-init:
-  - echo Building cURL for Windows
-  
 # GIT clone directory
 clone_folder: c:\projects\curl
 
@@ -23,24 +16,19 @@ platform: x64
 configuration: Release
 
 environment:
-  CYG_ROOT: C:/cygwin
-  CYG_MIRROR: http://cygwin.mirror.constant.com
-  CYG_CACHE: C:/cygwin/var/cache/setup
   DEST: "c:/projects/dest"
-  CMAKE_GENERATOR_STRING: '"Visual Studio 12 Win64"'
   CURL_VERSION: 7.39.0
   CURL_DL_URL: "http://curl.haxx.se/download/"
 
 install:
-  - cmd: 'echo Installing Curl from Chocolatey'
   - cmd: 'cinst curl'
  
 before_build:
-  - cmd: 'cd \projects\curl'
+  - cmd: 'cd C:\projects\curl'
   - cmd: 'curl -L -o curl.zip %CURL_DL_URL%curl-%CURL_VERSION%.zip'
   - cmd: '7z x curl.zip > NUL'
   - cmd: 'rename curl-%CURL_VERSION% curl-src'
   - cmd: 'del curl.zip'
-  - cmd: 'md c:\projects\curl\curl-src\msbuild'
-  - cmd: 'Using cmake to build SLN file'
-  - cmd: 'cmake -G %CMAKE_GENERATOR_STRING% -DCMAKE_INSTALL_PREFIX=%DEST% -DCURL_STATICLIB=ON ..'
+
+build:
+  project: curl-src\Windows\VC12\curl.sln
