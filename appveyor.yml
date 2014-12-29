@@ -5,7 +5,8 @@ version: 1.0.{build}
 
 # branches to build
 branches:
-  - master
+  only:
+    - master
 
 # Get image with cygwin
 os: Unstable
