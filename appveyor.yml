@@ -25,10 +25,12 @@ install:
  
 before_build:
   - cmd: 'cd C:\projects\curl'
+  - cmd: 'echo Downloading %CURL_DL_URL%curl-%CURL_VERSION%.zip'
   - cmd: 'curl -L -o curl.zip %CURL_DL_URL%curl-%CURL_VERSION%.zip'
   - cmd: '7z x curl.zip > NUL'
   - cmd: 'rename curl-%CURL_VERSION% curl-src'
   - cmd: 'del curl.zip'
+  - cmd: 'dir /s /b curl-src'
 
 build:
-  project: curl-src\Windows\VC12\curl.sln
+  project: C:\projects\curl\curl-src\Windows\VC12\curl.sln
