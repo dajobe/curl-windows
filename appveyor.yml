@@ -13,7 +13,8 @@ clone_folder: c:\projects\curl
 
 platform: x64
 
-configuration: Release
+configuration:
+  - DLL Release - DLL Windows SSPI
 
 environment:
   DEST: "c:/projects/dest"
@@ -31,6 +32,5 @@ before_build:
   - cmd: 'rename curl-%CURL_VERSION% curl-src'
   - cmd: 'del curl.zip'
 
-# project: C:\projects\curl\curl-src\projects\Windows\VC12\curl.sln
 build:
   project: curl-src\projects\Windows\VC12\curl.sln
